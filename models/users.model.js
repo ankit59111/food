@@ -1,13 +1,11 @@
 const mongoose = require("mongoose");
 const database = require("../config/database")();
-module.exports = function () {
-    //const {username,password,email}=req.body
-    let userSchema = mongoose.Schema({
-        username: String,
-        password:String,
-        email:String
+//const {username,password,email}=req.body
+let userSchema = mongoose.Schema({
+    username: String,
+    password: String,
+    email: String,
+    mobileNumber:Number
 
-    })
-    let userModel = mongoose.model("user_model",userSchema);
-    return userModel;
-}
+})
+module.exports = mongoose.model("user_model", userSchema);

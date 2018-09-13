@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const database = require("../config/database")();
-const userModel = require("../models/users.model")();
+const userModel = require("../models/users.model");
 const util = require("../util");
 
 
@@ -33,7 +33,25 @@ exports.render = (req, res) => {
             msg: "failed",
             error_msg: "mobile number should not be empty"
         })
-    } else if(!util.validateEmail(email)){
+    } else if(isNaN(mobileNumber)){
+        res.status(500);
+        res.send({
+            msg: "failed",
+            error_msg: "mobile number should be number"
+        })
+    }else if(mobileNumber.length<10){
+        res.status(500);
+        res.send({
+            msg: "failed",
+            error_msg: "mobile number should not be less than 10"
+        })
+    }else if(mobileNumber.length>10){
+        res.status(500);
+        res.send({
+            msg: "failed",
+            error_msg: "mobile number should not be greater than 10"
+        })
+    }else if(!util.validateEmail(email)){
         res.status(500);
         res.send({
             msg: "failed",
@@ -77,28 +95,10 @@ exports.render = (req, res) => {
                                         status: "failed",
                                         msg: "email already exist"
                                     })
-                                } else if(mobileNumber){
-                                    if(typeof mobileNumber !== "number" ){
-                                       res.status(500);
-                                       res.send({
-                                           msg: "failed",
-                                           error_msg: "mobile number should be number"
-                                       })
-                                    }else if(mobileNumber.length<10){
-                                        res.status(500);
-                                        res.send({
-                                            msg: "failed",
-                                            error_msg: "mobile number should not be less than 10"
-                                        })
-                                    }else if(mobileNumber.length>10){
-                                        res.status(500);
-                                        res.send({
-                                            msg: "failed",
-                                            error_msg: "mobile number should not be greater than 10"
-                                        })
-                                    }
                                 }else {
+
                                     mobileNumber = parseInt(mobileNumber);
+
                                     let user = new userModel({
                                         email,
                                         password: hashedPassword,
