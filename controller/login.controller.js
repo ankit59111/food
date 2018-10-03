@@ -3,6 +3,7 @@ const util = require('../util');
 const users = require("../models/users.model");
 exports.login = (req, res) => {
     const {email, password} = req.body;
+    console.log(req.body)
     if (!email) {
         res.status(400);
         res.send({
@@ -17,7 +18,7 @@ exports.login = (req, res) => {
         })
     } else {
         users.find({email}, (error, user) => {
-            console.log(user);
+            //console.log(user);
             if (error) {
                 res.status(500);
                 res.send({

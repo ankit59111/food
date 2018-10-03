@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text" id="client" name="chat_client",placeholder="chat_client">
+<input type="button" id="button">
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    console.log('hello');
+    var socket = io.connect();
+    socket.on('news', function (data) {
+        console.log(data);
+        socket.emit('my other event', { my: 'data' });
+    });
+</script>
+
+</body>
+</html>
