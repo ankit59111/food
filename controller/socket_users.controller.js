@@ -1,5 +1,6 @@
 var loggedInUserModel = require("../models/loggedInUsers.model");
 exports.render = function (req, res) {
+    console.log(req.body)
     let user_socket_id = req.body.socket_id;
     console.log(user_socket_id);
     debugger;

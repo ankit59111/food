@@ -6,11 +6,12 @@ const userModel = require("../models/users.model");
 const util = require("../util");
 
 
+
 exports.render = (req, res) => {
     let {email, password, username, mobileNumber, cnfrmpassword} = req.body;
     let hashedPassword;
     console.log("fghghjjhg");
-    console.log(req.body);
+    console.log((req.body));
     if (!email && !password && !username && !mobileNumber) {
         res.status(500);
         res.send({

@@ -26,7 +26,7 @@ module.exports = function (io) {
             console.log("sfgsfgsvfjdnvnfvjknfv");
             console.log(data);
 
-            io.sockets.sockets[data.to].emit('receiveMessage', {msg: data.message});
+            io.sockets.sockets[data.to].emit('receiveMessage', {message: data.message,type:"receiver"});
         })
 
     })
