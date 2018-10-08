@@ -23,10 +23,10 @@ module.exports = function (io) {
         })
 
         socket.on('sendMessage', function (data) {
-            console.log("sfgsfgsvfjdnvnfvjknfv");
+
             console.log(data);
 
-            io.sockets.sockets[data.to].emit('receiveMessage', {message: data.message,type:"receiver"});
+            io.sockets.sockets[data.to].emit('receiveMessage', {message: data.message,type:"receiver",kiski:data.to});
         })
 
     })

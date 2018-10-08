@@ -16,7 +16,7 @@ exports.render = (req, res) => {
         res.status(500);
         res.send({
             msg: "failed",
-            error: "please fill credentials first"
+            error_msg: "please fill credentials first"
         })
     } else if (!email) {
         res.status(500)
@@ -95,8 +95,8 @@ exports.render = (req, res) => {
                                 } else if (user) {
                                     res.status(500)
                                     res.send({
-                                        status: "failed",
-                                        msg: "email already exist"
+                                        msg: "failed",
+                                        error_msg: "email already exist"
                                     })
                                 }else {
 
