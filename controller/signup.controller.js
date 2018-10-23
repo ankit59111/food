@@ -120,8 +120,8 @@ exports.render = (req, res) => {
                                             jwt.sign(
                                                 {
                                                     email,
-                                                    password: hashedPassword,
-                                                    username
+                                                    username,
+                                                    mobileNumber
                                                 }, 'fuckerstumsenahopayega',
                                                 {expiresIn: '24h'},
                                                 (err, token) => {
@@ -129,7 +129,12 @@ exports.render = (req, res) => {
                                                     res.status(200);
                                                     res.send({
                                                         msg: "success",
-                                                        token: generated_token
+                                                        token: generated_token,
+                                                        user:{
+                                                            email,
+                                                            username,
+                                                            mobileNumber
+                                                        }
                                                     });
                                                 }
                                             )

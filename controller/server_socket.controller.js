@@ -23,10 +23,19 @@ module.exports = function (io) {
         })
 
         socket.on('sendMessage', function (data) {
-
             console.log(data);
+             loggedInUserModel.find({"_id":data.data._id},(err,result)=>{
+                 if(err){
+                     console.log(err);
+                 }else if(result.length==1){
+                     io.sockets.sockets[data.to].emit('receiveMessage', {message: data.message,type:"receiver",kiski:data.to});
+                 }else{
+                     console.log("user is now not logged in")
+                     console.log(result)
+                 }
+             })
 
-            io.sockets.sockets[data.to].emit('receiveMessage', {message: data.message,type:"receiver",kiski:data.to});
+
         })
 
     })

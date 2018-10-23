@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const util = require('../util');
 const users = require("../models/users.model");
 exports.login = (req, res) => {
@@ -38,15 +39,15 @@ exports.login = (req, res) => {
                     msg: 'failed',
                     error_msg: 'you are not registered, Get registered first fucker'
                 })
-            } else if(user.length==1) {
+            } else if (user.length == 1) {
                 let user_password = user[0].password;
-                bcrypt.compare(req.body.password,user_password, (err, result) => {
+                bcrypt.compare(req.body.password, user_password, (err, result) => {
                     if (err) {
                         res.status(500);
                         res.send({
                             msg: "failed",
                             error_msg: "internal server error",
-                            error:err
+                            error: err
                         })
                     } else if (result == false) {
                         res.status(400);
@@ -55,17 +56,30 @@ exports.login = (req, res) => {
                             error_msg: "password wrong"
                         })
                     } else if (result == true) {
-                        res.status(200);
-                        console.log(user)
-                        res.send({
-                            msg: "success",
-                            user: {
+                        jwt.sign({
                                 email: user[0].email,
                                 username: user[0].username,
                                 mobileNumber: user[0].mobileNumber,
-                                _id: user[0]._id
-                            }
-                        })
+                            }, 'fuckerstumsenahopayega', {expiresIn: '24h'},
+                            (error, token) => {
+                                if (error) {
+                                    res.send({
+                                        msg: "failed",
+                                        error
+                                    })
+                                } else {
+                                    res.status(200);
+                                    res.send({
+                                        msg: "success",
+                                        token: token,
+                                        user: {
+                                            email: user[0].email,
+                                            username: user[0].username,
+                                            mobileNumber: user[0].mobileNumber,
+                                        }
+                                    })
+                                }
+                            })
                     }
                 })
             }
